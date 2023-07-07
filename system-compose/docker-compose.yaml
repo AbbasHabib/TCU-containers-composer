@@ -4,7 +4,7 @@ services:
   # BACKEND_GATEWAY
   backend_gateway:
     container_name: backend_gateway
-    image: backend_gateway_alpine
+    image: registry.digitalocean.com/vehicle-plus/tcu_backend-gateway:v0
     privileged: true
     network_mode: host
     volumes:
@@ -20,7 +20,7 @@ services:
   # MQTT_GATEWAY
   mqtt_gateway:
     container_name: mqtt_gateway
-    image: mqtt_gateway
+    image: registry.digitalocean.com/vehicle-plus/tcu_mqtt-gateway:v0
     privileged: true
     network_mode: host
     volumes:
@@ -34,9 +34,9 @@ services:
           cpus: '0.2'       # Reserve 20% of one CPU core
           memory: 256M      # Reserve 256 megabytes of memory
   # ECUS_GATEWAY
-  ECUs_gateway:
-    container_name: ECUs_gateway
-    image: udp_server_alpine
+  ecus_ethernet_gateway:
+    container_name: ecus_ethernet_gateway
+    image: registry.digitalocean.com/vehicle-plus/tcu_ecu-ethernet-gateway:v0
     network_mode: host
     privileged: true
     volumes:
@@ -52,7 +52,7 @@ services:
   # GPS_TRANSCEIVER
   gps_transceiver:
     container_name: gps_transceiver
-    image: gps-serial-receiver
+    image: registry.digitalocean.com/vehicle-plus/tcu_gps-serial-receiver:v0
     privileged: true
     network_mode: host
     volumes:
