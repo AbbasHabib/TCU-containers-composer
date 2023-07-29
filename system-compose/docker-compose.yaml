@@ -1,10 +1,10 @@
-version: "3"
+version: "2"
 
 services:
   # BACKEND_GATEWAY
   backend_gateway:
     container_name: backend_gateway
-    image: registry.digitalocean.com/vehicle-plus/tcu_backend-gateway:v0
+    image: registry.digitalocean.com/vehicle-plus/tcu_backend-gateway:v2
     privileged: true
     network_mode: host
     volumes:
@@ -36,7 +36,7 @@ services:
   # ECUS_GATEWAY
   ecus_ethernet_gateway:
     container_name: ecus_ethernet_gateway
-    image: registry.digitalocean.com/vehicle-plus/tcu_ecu-ethernet-gateway:v0
+    image: registry.digitalocean.com/vehicle-plus/tcu_ecu-ethernet-gateway:v5
     network_mode: host
     privileged: true
     volumes:
@@ -58,6 +58,7 @@ services:
     volumes:
       - /tmp:/tmp:z
       - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/gps_serial:/dev/gps_serial
     deploy:
       resources:
         limits:
@@ -66,3 +67,13 @@ services:
         reservations:
           cpus: '0.2'       # Reserve 20% of one CPU core
           memory: 256M      # Reserve 256 megabytes of memory
+ # portainer
+  portainer:
+    image: portainer/portainer-ce:linux-arm64-2.18.4-alpine
+    ports:
+      - 9443:9443
+    volumes:
+        - data:/data
+        - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  data:

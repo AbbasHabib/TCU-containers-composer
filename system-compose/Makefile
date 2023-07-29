@@ -1,13 +1,18 @@
 prune:
 	docker container prune -f
-	docker image prune -f
 	docker volume prune -f
 	docker network prune -f
 
+sysprune:
+	docker system prune -a
+
 up:
-	make prune
 	docker-compose up -d
 
 down:
 	docker-compose down
 	make prune
+
+ota:
+	python ota-master.py
+	make sysprune
